@@ -11,8 +11,12 @@ export function CitizenPage({ user }) {
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
+    if (!message.trim()) {
+      setError("Please enter feedback.");
+      return;
+    }
     try {
-      await submitFeedback({ nric: user.nric, name: user.name, message });
+      await submitFeedback({ nric: user.nric, name: user.name, message: message.trim() });
       setSubmitted(true);
       setMessage("");
     } catch (requestError) {
