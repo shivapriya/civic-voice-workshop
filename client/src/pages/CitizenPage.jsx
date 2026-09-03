@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { submitFeedback } from "../api";
 
+const MAX_MESSAGE_LENGTH = 500;
+
 export function CitizenPage({ user }) {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -29,10 +31,10 @@ export function CitizenPage({ user }) {
         {submitted && <div className="success-banner">Thank you. Your feedback has been received.</div>}
         <form onSubmit={handleSubmit}>
           <label>Your feedback
-            <textarea rows="7" value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Share your feedback here..." />
+            <textarea rows="7" maxLength={MAX_MESSAGE_LENGTH} value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Share your feedback here..." />
           </label>
           <div className="form-footer">
-            <span className="muted">Please do not include sensitive personal information.</span>
+            <span className="muted">{message.length} / {MAX_MESSAGE_LENGTH} characters. Please do not include sensitive personal information.</span>
             <button className="primary-button">Submit feedback</button>
           </div>
           {error && <p className="error-message">{error}</p>}
